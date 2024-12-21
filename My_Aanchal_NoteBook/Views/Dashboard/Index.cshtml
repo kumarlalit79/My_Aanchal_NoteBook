@@ -1,0 +1,146 @@
+﻿@model IEnumerable<My_Aanchal_NoteBook.Models.MilkEntry>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Master.cshtml";
+    
+}
+
+
+<p>
+    <a asp-action="CreateMilkEntries" class="fw-bold">Create New</a>
+</p>
+<table class="table table-bordered text-black ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryTiming)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Snf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bonus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remark)
+            </th>
+            
+            
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryTiming)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Snf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bonus)
+            </td>
+                <td>
+                     @* <img src="@Url.Content(item.Image)" alt="Milk Image" width="100" /> *@
+                    @* <br /> *@
+                    <a href="@Url.Content(item.Image)" download="@item.Image.Substring(item.Image.LastIndexOf('/') + 1)">Download Image</a>
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            
+            
+            <td>
+                    <a asp-action="UpdateMilkEntery" asp-controller="Dashboard" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="DetailsOfMilkEntery" asp-route-id="@item.Id">Details</a> |
+                    <a href="javascript:void(0)" onclick="DeleteMilkAlert('@Url.Action("DeleteMilkEntery" , new{id=@item.Id})');">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function DeleteMilkAlert(deleteUrl) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // swalWithBootstrapButtons.fire({
+                //     title: "Deleted!",
+                //     text: "Your file has been deleted.",
+                //     icon: "success"
+                // });
+                window.location.href = deleteUrl;
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Your imaginary file is safe :)",
+                    icon: "error"
+                });
+            }
+        });
+    }
+
+    
+</script>

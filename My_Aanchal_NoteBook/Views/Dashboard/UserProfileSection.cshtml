@@ -1,0 +1,129 @@
+﻿@model IEnumerable<My_Aanchal_NoteBook.Models.User>
+
+@{
+    ViewData["Title"] = "UserProfileSection";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+<h3>Welcome @ViewBag.Username</h3>
+
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HusbandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DairyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DairyLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SachiveName)
+            </th>
+            
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HusbandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DairyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DairyLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SachiveName)
+                </td>
+            
+            <td>
+                    <a asp-action="UpdateUser" asp-route-id="@item.UserId">Edit</a> |
+                    <a asp-action="UserDetails"  asp-route-id="@item.UserId">Details</a> |
+                    <a href="javascript:void(0);" onclick="DeleteUserAlert('@Url.Action("DeleteUser", new { id = item.UserId })');">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function DeleteUserAlert(deleteUrl) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // swalWithBootstrapButtons.fire({
+                //     title: "Deleted!",
+                //     text: "Your file has been deleted.",
+                //     icon: "success"
+                // });
+                window.location.href = deleteUrl;
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Your imaginary file is safe :)",
+                    icon: "error"
+                });
+            }
+        });
+    }
+
+    
+</script>

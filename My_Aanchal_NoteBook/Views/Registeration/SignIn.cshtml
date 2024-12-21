@@ -1,0 +1,222 @@
+﻿@model My_Aanchal_NoteBook.Models.User
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = null;
+}
+
+
+<link href="~/template/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="~/template/css/sb-admin-2.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<script src="~/template/vendor/jquery/jquery.min.js"></script>
+<script src="~/template/js/sb-admin-2.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+
+
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="SignUp" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HusbandName" class="control-label"></label>
+                        <input asp-for="HusbandName" class="form-control" />
+                        <span asp-validation-for="HusbandName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EmailId" class="control-label"></label>
+                        <input asp-for="EmailId" class="form-control" />
+                        <span asp-validation-for="EmailId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <input name="PhoneNumber" id="modalPhoneNumber" readonly class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    @* <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <input readonly value="@ViewBag.MobileNumer" name="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div> *@
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DairyName" class="control-label"></label>
+                        <input asp-for="DairyName" class="form-control" />
+                        <span asp-validation-for="DairyName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DairyLocation" class="control-label"></label>
+                        <input asp-for="DairyLocation" class="form-control" />
+                        <span asp-validation-for="DairyLocation" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SachiveName" class="control-label"></label>
+                        <input asp-for="SachiveName" class="form-control" />
+                        <span asp-validation-for="SachiveName" class="text-danger"></span>
+                    </div>
+                    @*  <div class="form-group">
+                    <label asp-for="Otp" class="control-label"></label>
+                    <input asp-for="Otp" class="form-control" />
+                    <span asp-validation-for="Otp" class="text-danger"></span>
+                    </div> *@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; 
+        height: 100%;
+    }
+
+    .container-fluid {
+        height: 100vh;
+    }
+
+    .left-section {
+        background-color: #e6f8ff;
+    }
+
+    .image-container {
+        height: calc(100vh - 250px); 
+        overflow: hidden;
+    }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+        }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .btn-user {
+        width: 100%;
+    }
+</style>
+
+<!-- Main Container -->
+<div class="container-fluid">
+    <div class="row min-vh-100">
+        <!-- Left Section -->
+        <div class="col-lg-6 d-none d-lg-block left-section p-0">
+            <div class="text-center py-4">
+                <img src="~/images/udfclogo-removebg-preview.png" height="100px" width="100px" />
+                <h5 class="text-danger font-weight-bold mt-2">
+                    Uttrakhand Co-operative Dairy Federation Ltd.(UDFC)
+                </h5>
+                <h4 class="font-weight-bold text-primary">Track your daily milk supply</h4>
+            </div>
+            <div class="image-container">
+                <img src="~/images/staterimage.jpg" alt="Campus Image" class="img-fluid" />
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <!-- Right Section -->
+        <div class="col-lg-6 col-md-8 col-sm-12 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="w-100 px-5">
+                <h3 class="text-primary text-center mb-4 font-weight-bold">Login</h3>
+                <form method="post" asp-action="SignIn" asp-controller="Registeration" class="user" id="loginForm">
+                    <div class="form-group mb-3">
+                        <label for="PhoneNumber">Enter Phonenumber</label>
+                        <input type="text" asp-for="PhoneNumber" class="form-control mb-3" id="phoneNumber" placeholder="Enter Phone Number..." />
+                    </div>
+                    <div class="form-group d-grid gap-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" value="Login" class="btn btn-primary btn-user btn-block mb-2" />
+                            </div>
+                            <div class="col-md-6">
+                                <input type="reset" value="Reset" onclick="Resetphone();" class="btn btn-danger btn-user btn-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="#" class="small text-primary">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#loginForm").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var phoneNumber = $("#phoneNumber").val();
+
+            $.ajax({
+                url: '@Url.Action("SignIn", "Registeration")',
+                type: 'POST',
+                data: { phoneNumber: phoneNumber },
+                success: function (response) {
+                    if (response.success) {
+                        // Redirect to Dashboard
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        // Open the SignUp modal
+                        $("#signupModal").modal("show");
+                        $("#signupModal input[name='PhoneNumber']").val(response.phoneNumber);
+                    }
+                },
+                error: function () {
+                    alert("Something went wrong. Please try again.");
+                }
+            });
+        });
+    })
+    function Resetphone(){
+        $("#phoneNumber").val("");
+    }
+
+
+</script>
