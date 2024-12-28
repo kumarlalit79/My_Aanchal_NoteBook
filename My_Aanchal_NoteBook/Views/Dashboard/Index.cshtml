@@ -4,103 +4,111 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Master.cshtml";
-    
+
 }
+
 
 
 <p>
-    <a asp-action="CreateMilkEntries" class="fw-bold">Create New</a>
+    <a asp-action="Upload" asp-controller="Dashboard" class="fw-bold float-start btn btn-success mb-2"><i class="bi bi-camera-fill"></i> Scan Reciept</a>
+    <a asp-action="CreateMilkEntries" class="fw-bold float-end btn btn-primary mb-2"><i class="bi bi-plus-circle-fill"></i> Create New</a>
 </p>
-<table class="table table-bordered text-black ">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EntryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EntryTiming)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Snf)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bonus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remark)
-            </th>
-            
-            
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EntryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EntryTiming)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Snf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bonus)
-            </td>
-                <td>
-                     @* <img src="@Url.Content(item.Image)" alt="Milk Image" width="100" /> *@
-                    @* <br /> *@
-                    <a href="@Url.Content(item.Image)" download="@item.Image.Substring(item.Image.LastIndexOf('/') + 1)">Download Image</a>
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
-            </td>
-            
-            
-            <td>
-                    <a asp-action="UpdateMilkEntery" asp-controller="Dashboard" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="DetailsOfMilkEntery" asp-route-id="@item.Id">Details</a> |
-                    <a href="javascript:void(0)" onclick="DeleteMilkAlert('@Url.Action("DeleteMilkEntery" , new{id=@item.Id})');">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="table-responsive">
+
+
+    <table class="table table-bordered text-black ">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EntryDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EntryTiming)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Snf)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bonus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </th>
+
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EntryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EntryTiming)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Snf)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bonus)
+                    </td>
+                    <td>
+                        @* <img src="@Url.Content(item.Image)" alt="Milk Image" width="100" /> *@
+                        @* <br /> *@
+                        <a href="@Url.Content(item.Image)" download="@item.Image.Substring(item.Image.LastIndexOf('/') + 1)">Download Image</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remark)
+                    </td>
+
+
+                    <td>
+                        <a asp-action="UpdateMilkEntery" asp-controller="Dashboard" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="DetailsOfMilkEntery" asp-route-id="@item.Id">Details</a> |
+                        <a href="javascript:void(0)" onclick="DeleteMilkAlert('@Url.Action("DeleteMilkEntery" , new{id=@item.Id})');">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
@@ -142,5 +150,5 @@
         });
     }
 
-    
+
 </script>

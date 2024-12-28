@@ -10,80 +10,89 @@
 
 
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HusbandName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DairyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DairyLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SachiveName)
-            </th>
-            
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HusbandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DairyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DairyLocation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SachiveName)
-                </td>
-            
-            <td>
-                    <a asp-action="UpdateUser" asp-route-id="@item.UserId">Edit</a> |
-                    <a asp-action="UserDetails"  asp-route-id="@item.UserId">Details</a> |
-                    <a href="javascript:void(0);" onclick="DeleteUserAlert('@Url.Action("DeleteUser", new { id = item.UserId })');">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="table-responsive">
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HusbandName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DairyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DairyLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SachiveName)
+                </th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HusbandName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DairyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DairyLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SachiveName)
+                    </td>
+
+                    <td>
+                        <a asp-action="UpdateUser" asp-route-id="@item.UserId">Edit</a> |
+                        <a asp-action="UserDetails" asp-route-id="@item.UserId">Details</a> |
+                        <a href="javascript:void(0);" onclick="DeleteUserAlert('@Url.Action("DeleteUser", new { id = item.UserId })');">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
@@ -125,5 +134,5 @@
         });
     }
 
-    
+
 </script>

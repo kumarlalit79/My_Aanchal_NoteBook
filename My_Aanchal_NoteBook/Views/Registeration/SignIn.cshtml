@@ -10,6 +10,8 @@
 <link href="~/template/css/sb-admin-2.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+<link href="~/css/signin.css" rel="stylesheet" />
+
 <script src="~/template/vendor/jquery/jquery.min.js"></script>
 <script src="~/template/js/sb-admin-2.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -97,54 +99,27 @@
     </div>
 </div>
 
-<style type="text/css">
-    html, body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden; 
-        height: 100%;
-    }
 
-    .container-fluid {
-        height: 100vh;
-    }
 
-    .left-section {
-        background-color: #e6f8ff;
-    }
-
-    .image-container {
-        height: calc(100vh - 250px); 
-        overflow: hidden;
-    }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-        }
-
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: 100%;
-    }
-
-    .btn-user {
-        width: 100%;
-    }
-</style>
-
-<!-- Main Container -->
 <div class="container-fluid">
+    <!-- Mobile Header (Hidden in Desktop View) -->
+    <div class="row text-center py-3 bg-light d-lg-none">
+        <div class="col-12">
+            <img src="~/images/udfclogo-removebg-preview.png" height="80px" width="80px" alt="UDFC Logo" />
+            <h5 class="text-danger font-weight-bold mt-2">
+                Uttrakhand Co-operative Dairy Federation Ltd. (UDFC)
+            </h5>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="row min-vh-100">
-        <!-- Left Section -->
+        <!-- Left Section (Visible in Desktop View) -->
         <div class="col-lg-6 d-none d-lg-block left-section p-0">
             <div class="text-center py-4">
                 <img src="~/images/udfclogo-removebg-preview.png" height="100px" width="100px" />
                 <h5 class="text-danger font-weight-bold mt-2">
-                    Uttrakhand Co-operative Dairy Federation Ltd.(UDFC)
+                    Uttrakhand Co-operative Dairy Federation Ltd. (UDFC)
                 </h5>
                 <h4 class="font-weight-bold text-primary">Track your daily milk supply</h4>
             </div>
@@ -154,13 +129,12 @@
         </div>
 
         <!-- Right Section -->
-        <!-- Right Section -->
         <div class="col-lg-6 col-md-8 col-sm-12 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
             <div class="w-100 px-5">
                 <h3 class="text-primary text-center mb-4 font-weight-bold">Login</h3>
                 <form method="post" asp-action="SignIn" asp-controller="Registeration" class="user" id="loginForm">
                     <div class="form-group mb-3">
-                        <label for="PhoneNumber">Enter Phonenumber</label>
+                        <label for="PhoneNumber">Enter Phone Number</label>
                         <input type="text" asp-for="PhoneNumber" class="form-control mb-3" id="phoneNumber" placeholder="Enter Phone Number..." />
                     </div>
                     <div class="form-group d-grid gap-2">
@@ -179,9 +153,10 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
+
+
 
 
 

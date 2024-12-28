@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using My_Aanchal_NoteBook.Data;
 using My_Aanchal_NoteBook.Repository.Implementation;
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServe
 
 builder.Services.AddScoped<IMilkEntry , MilkEntryImplementation>();
 builder.Services.AddScoped<IRegisteration , RegisterationImplementation>();
+
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();

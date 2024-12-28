@@ -6,98 +6,71 @@
 }
 
 <h3>User Details</h3>
+<hr />
+<div class="border rounded-3 p-2">
 
-<div>
-    
-    <hr />
-    <dl class="row text-center">
-        <dt class="col-sm-2 text-center">
-            @Html.DisplayNameFor(model => model.Code)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Code)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HusbandName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HusbandName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmailId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmailId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DairyName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DairyName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DairyLocation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DairyLocation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SachiveName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SachiveName)
-        </dd>
-        @* <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Otp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Otp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OtpCreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OtpCreatedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OtpEndsOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OtpEndsOn)
-        </dd> *@
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
-    <a asp-action="UserProfileSection">Back to List</a>
+
+    <div class="container-fluid">
+
+        <div class="row ">
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Code)
+                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.HusbandName)
+                @Html.TextBoxFor(model => model.HusbandName, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.EmailId)
+                @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.PhoneNumber)
+                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Address)
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.DairyName)
+                @Html.TextBoxFor(model => model.DairyName, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.DairyLocation)
+                @Html.TextBoxFor(model => model.DairyLocation, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.SachiveName)
+                @Html.TextBoxFor(model => model.SachiveName, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-12 mt-4">
+                <div class="form-group d-grid">
+                    <a asp-action="UpdateUser" asp-route-id="@Model?.UserId" class="btn btn-primary d-block"> <i class="bi bi-pencil-square"></i> Edit</a>
+                </div>
+            </div>
+            <div class="col-md-6 d-grid mt-4">
+                <div>
+                    <a asp-action="UserProfileSection" class="btn btn-secondary d-block"><i class="bi bi-skip-backward-fill"></i> Back to List</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div>
+    </div>
 </div>

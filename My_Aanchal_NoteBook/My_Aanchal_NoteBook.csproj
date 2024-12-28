@@ -21,10 +21,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="SweetAlert" Version="1.0.0" />
+    <PackageReference Include="Tesseract" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\images\uploadedimages\" />
+    <Folder Include="wwwroot\tessdata\" />
   </ItemGroup>
 
 </Project>

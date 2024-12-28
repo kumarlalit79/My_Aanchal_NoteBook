@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using My_Aanchal_NoteBook.Models;
 using My_Aanchal_NoteBook.Repository.Interface;
+using Newtonsoft.Json;
 using System.Drawing.Printing;
+using System.Text.RegularExpressions;
+using Tesseract;
 
 namespace My_Aanchal_NoteBook.Controllers
 {
@@ -49,6 +52,141 @@ namespace My_Aanchal_NoteBook.Controllers
             return View(milkEntryData);
         }
 
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            var userId = HttpContext.Session.GetInt32("Userid");
+
+            if (!userId.HasValue)
+            {
+                return RedirectToAction("SignIn", "Registeration");
+            }
+            if (file != null && file.Length > 0)
+            {
+                var uploadsPath = Path.Combine(_webHostEnv.WebRootPath, "Uploads");
+                if (!Directory.Exists(uploadsPath))
+                {
+                    Directory.CreateDirectory(uploadsPath);
+                }
+                //var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // Generate unique file name
+                var filePath = Path.Combine(uploadsPath, Path.GetFileName(file.FileName));
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                try
+                {
+                    string extractedText = ExtractTextFromImage(filePath);
+                    MilkEntry receipt = ParseReceiptText(extractedText);
+
+                    if (receipt.TotalPrice <= 0)
+                    {
+                        TempData["RecieptMsg"] = "System is unable to read your reciept, please do the manual entry.";
+                        return RedirectToAction("CreateMilkEntries");
+                    }
+
+                    receipt.Image = "/Uploads/" + Path.GetFileName(file.FileName);
+                    
+                    TempData["UploadedReceipt"] = JsonConvert.SerializeObject(receipt);
+                    TempData.Keep("UploadedReceipt");
+                    
+                    return RedirectToAction("CreateMilkEntries");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Error: " + ex.Message;
+                }
+            }
+            else
+            {
+                ViewBag.Message = "Please upload a valid image file.";
+            }
+            
+            //await milkEntry.CreateMilkEntry(model, userId.Value);
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        private string ExtractTextFromImage(string imagePath)
+        {
+            var tessDataPath = Path.Combine(_webHostEnv.WebRootPath, "tessdata");
+            using (var engine = new TesseractEngine(tessDataPath, "eng", EngineMode.Default))
+            {
+                using (var img = Pix.LoadFromFile(imagePath))
+                {
+                    using (var page = engine.Process(img))
+                    {
+                        return page.GetText();
+                    }
+                }
+            }
+        }
+        private MilkEntry ParseReceiptText(string text)
+        {
+            var receipt = new MilkEntry();
+            var lines = text.Split('\n');
+            string fullText = string.Join("\n", lines);
+            string patternss = @"FAT:.*";
+            var matches = Regex.Match(fullText, patternss, RegexOptions.Singleline);
+
+            if (matches.Success)
+            {
+                string contentAfterFAT = fullText.Substring(matches.Index);
+                var linesAfterFAT = contentAfterFAT.Split('\n')
+                    .Where(line => !string.IsNullOrWhiteSpace(line))
+                    .Select(line => line.Trim())
+                    .ToList();
+                string cleanedContent = string.Join("\n", linesAfterFAT);
+                for (int i = 0; i < linesAfterFAT.Count; i++)
+                {
+                    string extractedNumber = null;
+                    string x = linesAfterFAT[i].Replace(" ", "").Replace("_", ".");
+                    string pattern = @"\d+(\.\d+)?";
+                    Match match = Regex.Match(x, pattern);
+
+                    if (match.Success)
+                    {
+                        extractedNumber = match.Value;
+                    }
+                    else
+                    {
+                        extractedNumber = "0.0";
+                    }
+                    if (i == 0)
+                    {
+                        receipt.Fat = decimal.Parse(extractedNumber);
+                    }
+                    if (i == 1)
+                    {
+                        receipt.Snf = decimal.Parse(extractedNumber);
+                    }
+                    if (i == 2)
+                    {
+                        receipt.Quantity = decimal.Parse(extractedNumber);
+                    }
+                    if (i == 3)
+                    {
+                        receipt.Rate = decimal.Parse(extractedNumber);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("No match found!");
+            }
+            receipt.TotalPrice = Math.Round(receipt.Quantity * receipt.Rate, 2);
+            receipt.Bonus = Math.Round(receipt.TotalPrice * 0.097m, 2);
+            
+            receipt.EntryDate = DateTime.Now;
+            return receipt;
+        }
+
+        [HttpGet]
         public IActionResult CreateMilkEntries()
         {
             var isLoggedIn = HttpContext.Session.GetString("IsLoggedIn");
@@ -59,8 +197,18 @@ namespace My_Aanchal_NoteBook.Controllers
 
             var usercode = HttpContext.Session.GetString("Code") ?? "";
             ViewBag.Usercode = usercode;
-            return View();
+
+            var uploadedReceiptJson = TempData["UploadedReceipt"] as string;
+            MilkEntry model = uploadedReceiptJson != null
+                ? JsonConvert.DeserializeObject<MilkEntry>(uploadedReceiptJson)
+                : new MilkEntry();
+            //TempData.Keep("UploadedReceipt");
+
+            
+
+            return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateMilkEntries(MilkEntry model , IFormFile file)
         {
@@ -93,17 +241,14 @@ namespace My_Aanchal_NoteBook.Controllers
                 model.Image = @"images\uploadedimages\" + fileName;
             }
 
+            
+
             model.TotalPrice = model.Quantity * model.Rate;
             await milkEntry.CreateMilkEntry(model , userId.Value);
             return RedirectToAction("Index", "Dashboard");
         }
 
-        //public async Task<IActionResult> GetMilkById(int id)
-        //{
-        //    var data = await milkEntry.GetMilkEntryById(id);
-        //    return View(data);
-        //}
-
+        
         public async Task<IActionResult> UserProfileSection(User model)
         {
             var username = HttpContext.Session.GetString("Username");

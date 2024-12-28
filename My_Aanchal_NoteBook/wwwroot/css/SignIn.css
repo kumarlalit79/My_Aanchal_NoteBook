@@ -1,0 +1,48 @@
+﻿/* Global Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+.container-fluid {
+    height: 100vh;
+}
+
+.left-section {
+    background-color: #e6f8ff;
+}
+
+.image-container {
+    height: calc(100vh - 250px);
+    overflow: hidden;
+}
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+.btn-user {
+    width: 100%;
+}
+
+/* Hide Mobile Header in Desktop View */
+@media (min-width: 992px) {
+    .row.text-center.py-3.d-lg-none {
+        display: none;
+    }
+}
+
+/* Hide Desktop Header in Mobile View */
+@media (max-width: 991px) {
+    .left-section .text-center {
+        display: none;
+    }
+
+    .row.text-center.py-3.d-lg-none {
+        display: block;
+    }
+}
