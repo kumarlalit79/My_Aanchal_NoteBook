@@ -45,11 +45,14 @@ namespace My_Aanchal_NoteBook.Models
         [Range(0.01, 999999.99, ErrorMessage = "Rate must be between 0.01 and 999999.99")]
         public decimal Bonus { get; set; }
 
-        [StringLength(255, ErrorMessage = "Image path cannot exceed 50 characters")]
-        public string Image { get; set; }
+        //[StringLength(255, ErrorMessage = "Image path cannot exceed 50 characters")]
+        //public string Image { get; set; }
 
-        [StringLength(50, ErrorMessage = "Remark cannot exceed 50 characters")]
-        public string Remark { get; set; }
+        [StringLength(255, ErrorMessage = "Image path cannot exceed 255 characters")]
+        public string ImagePath { get; set; }
+
+        //[StringLength(50, ErrorMessage = "Remark cannot exceed 50 characters")]
+        //public string Remark { get; set; }
 
         [Required]
         [ForeignKey("User")] // Foreign key to the User table

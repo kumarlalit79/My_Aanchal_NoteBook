@@ -8,7 +8,7 @@ namespace My_Aanchal_NoteBook.Repository.Interface
         Task<MilkEntry> GetMilkEntryById(int id);
         Task CreateMilkEntry(MilkEntry model , int userId);
 
-        Task UpdateMilkEntry(MilkEntry model);
+        Task UpdateMilkEntry(MilkEntry model, int userId);
         Task DeleteMilkEntryById(int id);
 
         

@@ -33,9 +33,9 @@ namespace My_Aanchal_NoteBook.Repository.Implementation
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateMilkEntry(MilkEntry model)
+        public async Task UpdateMilkEntry(MilkEntry model, int userId)
         {
-            //model.UserId = userId;
+            model.UserId = userId;
             model.CreatedOn = DateTime.Now;
             context.MilkEntries.Update(model);
             await context.SaveChangesAsync();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using My_Aanchal_NoteBook.Data;
 using My_Aanchal_NoteBook.Models;
 using My_Aanchal_NoteBook.Repository.Interface;
 using Newtonsoft.Json;
@@ -9,21 +10,23 @@ using Tesseract;
 
 namespace My_Aanchal_NoteBook.Controllers
 {
-    
+
     public class DashboardController : Controller
     {
         private readonly IMilkEntry milkEntry;
         private readonly IRegisteration registeration;
         private readonly IWebHostEnvironment _webHostEnv;
+        private readonly ApplicationDbContext context;
 
-        public DashboardController(IMilkEntry milkEntry , IRegisteration registeration , IWebHostEnvironment webHostEnv)
+        public DashboardController(IMilkEntry milkEntry, IRegisteration registeration, IWebHostEnvironment webHostEnv, ApplicationDbContext context)
         {
             this.milkEntry = milkEntry;
             this.registeration = registeration;
             this._webHostEnv = webHostEnv;
+            this.context = context;
         }
 
-        public  IActionResult DashboardMethod()
+        public IActionResult DashboardMethod()
         {
             var username = HttpContext.Session.GetString("Username");
             var userid = HttpContext.Session.GetInt32("Userid");
@@ -33,6 +36,83 @@ namespace My_Aanchal_NoteBook.Controllers
                 return RedirectToAction("SignIn", "Registeration");
             }
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetMilkDataLineChart()
+        {
+            var data = context.MilkEntries
+            .GroupBy(m => new
+            {
+                Day = m.EntryDate.Day,
+                Timing = m.EntryTiming
+            })
+            .Select(g => new
+            {
+                Day = g.Key.Day,
+                Timing = g.Key.Timing,
+                AveragePrice = g.Average(x => x.TotalPrice)
+            })
+            .ToList();
+            var morningData = data
+            .Where(x => x.Timing == "Morning")
+            .Select(x => new { x.Day, x.AveragePrice })
+            .ToList();
+
+            var eveningData = data
+                .Where(x => x.Timing == "Evening")
+                .Select(x => new { x.Day, x.AveragePrice })
+                .ToList();
+
+            return Json(new
+            {
+                Morning = morningData,
+                Evening = eveningData
+            });
+        }
+
+        [HttpGet]
+        public JsonResult GetMilkDataColumnChart()
+        {
+            var rawData = context.MilkEntries
+        .Select(m => new
+        {
+            m.EntryDate,
+            m.EntryTiming,
+            m.Quantity
+        })
+        .ToList();
+            var data = rawData
+        .GroupBy(m => new
+        {
+            Day = m.EntryDate.Day, // Replace DayOfWeek with Day if needed
+            Timing = m.EntryTiming
+        })
+        .Select(g => new
+        {
+            Day = g.Key.Day,
+            Timing = g.Key.Timing,
+            TotalQuantity = g.Sum(x => x.Quantity)
+        })
+        .ToList();
+
+            var morningData = data
+        .Where(x => x.Timing == "Morning")
+        .OrderBy(x => x.Day)
+        .Select(x => new { x.Day, x.TotalQuantity })
+        .ToList();
+
+            var eveningData = data
+                .Where(x => x.Timing == "Evening")
+                .OrderBy(x => x.Day)
+                .Select(x => new { x.Day, x.TotalQuantity })
+                .ToList();
+
+            return Json(new
+            {
+                Morning = morningData,
+                Evening = eveningData
+            });
         }
 
         public async Task<IActionResult> Index(User model)
@@ -46,9 +126,9 @@ namespace My_Aanchal_NoteBook.Controllers
             {
                 return RedirectToAction("SignIn", "Registeration");
             }
-            
 
-            var milkEntryData = await milkEntry.GetAllRecord(model , userid.Value);
+
+            var milkEntryData = await milkEntry.GetAllRecord(model, userid.Value);
             return View(milkEntryData);
         }
 
@@ -74,12 +154,26 @@ namespace My_Aanchal_NoteBook.Controllers
                 {
                     Directory.CreateDirectory(uploadsPath);
                 }
-                //var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // Generate unique file name
-                var filePath = Path.Combine(uploadsPath, Path.GetFileName(file.FileName));
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // Generate unique file name
+                //var filePath = Path.Combine(uploadsPath, Path.GetFileName(file.FileName));
+                var filePath = Path.Combine(uploadsPath, fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
+
+                // saving img to database
+                var uploadedImage = new MilkEntry
+                {
+                    UserId = userId.Value,
+                    ImagePath = "/Uploads/" + fileName,
+                };
+
+                //context.MilkEntries.Add(uploadedImage);
+                //await context.SaveChangesAsync();
+
+                TempData["ImagePath"] = uploadedImage.ImagePath;
+
                 try
                 {
                     string extractedText = ExtractTextFromImage(filePath);
@@ -91,11 +185,11 @@ namespace My_Aanchal_NoteBook.Controllers
                         return RedirectToAction("CreateMilkEntries");
                     }
 
-                    receipt.Image = "/Uploads/" + Path.GetFileName(file.FileName);
-                    
+                    //receipt.Image = "/Uploads/" + Path.GetFileName(file.FileName);
+
                     TempData["UploadedReceipt"] = JsonConvert.SerializeObject(receipt);
                     TempData.Keep("UploadedReceipt");
-                    
+
                     return RedirectToAction("CreateMilkEntries");
                 }
                 catch (Exception ex)
@@ -107,7 +201,7 @@ namespace My_Aanchal_NoteBook.Controllers
             {
                 ViewBag.Message = "Please upload a valid image file.";
             }
-            
+
             //await milkEntry.CreateMilkEntry(model, userId.Value);
             return RedirectToAction("Index", "Dashboard");
         }
@@ -181,7 +275,7 @@ namespace My_Aanchal_NoteBook.Controllers
             }
             receipt.TotalPrice = Math.Round(receipt.Quantity * receipt.Rate, 2);
             receipt.Bonus = Math.Round(receipt.TotalPrice * 0.097m, 2);
-            
+
             receipt.EntryDate = DateTime.Now;
             return receipt;
         }
@@ -204,13 +298,13 @@ namespace My_Aanchal_NoteBook.Controllers
                 : new MilkEntry();
             //TempData.Keep("UploadedReceipt");
 
-            
+
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMilkEntries(MilkEntry model , IFormFile file)
+        public async Task<IActionResult> CreateMilkEntries(MilkEntry model)
         {
             var userId = HttpContext.Session.GetInt32("Userid");
 
@@ -219,42 +313,24 @@ namespace My_Aanchal_NoteBook.Controllers
                 return RedirectToAction("SignIn", "Registeration");
             }
 
-            string wwwRootPath = _webHostEnv.WebRootPath;
-            if (file != null)
+            var imagePath = TempData["ImagePath"] as string;
+            if (!string.IsNullOrEmpty(imagePath))
             {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string imagePath = Path.Combine(wwwRootPath, @"images\uploadedimages");
-
-                if (!string.IsNullOrEmpty(model.Image))
-                {
-                    var oldImagePath = Path.Combine(wwwRootPath, model.Image.Trim('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        System.IO.File.Delete(oldImagePath);
-                    }
-                }
-
-                using (var fileStream = new FileStream(Path.Combine(imagePath, fileName) , FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                model.Image = @"images\uploadedimages\" + fileName;
+                model.ImagePath = imagePath;  // Assign the uploaded image path to the model
             }
 
-            
-
             model.TotalPrice = model.Quantity * model.Rate;
-            await milkEntry.CreateMilkEntry(model , userId.Value);
+            await milkEntry.CreateMilkEntry(model, userId.Value);
             return RedirectToAction("Index", "Dashboard");
         }
 
-        
+
         public async Task<IActionResult> UserProfileSection(User model)
         {
             var username = HttpContext.Session.GetString("Username");
             ViewBag.Username = username;
             var userid = HttpContext.Session.GetInt32("Userid");
-            var data = await registeration.Users(model , userid.Value);
+            var data = await registeration.Users(model, userid.Value);
             return View(data);
         }
 
@@ -267,6 +343,7 @@ namespace My_Aanchal_NoteBook.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateUser(User model)
         {
+
             await registeration.Update(model);
             return RedirectToAction("UserProfileSection", "Dashboard");
         }
@@ -287,42 +364,15 @@ namespace My_Aanchal_NoteBook.Controllers
             return View(milkData);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateMilkEntery(MilkEntry model, IFormFile file)
+        public async Task<IActionResult> UpdateMilkEntery(MilkEntry model)
         {
             var userId = HttpContext.Session.GetInt32("Userid");
-            string wwwRootPath = _webHostEnv.WebRootPath;
-
-            var oldData = await milkEntry.GetMilkEntryById(model.Id);
-
-            if (file != null)
+            var imagePath = TempData["ImagePath"] as string;
+            if (!string.IsNullOrEmpty(imagePath))
             {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string imagePath = Path.Combine(wwwRootPath, @"images\uploadedimages");
-
-                if (!string.IsNullOrEmpty(oldData.Image))
-                {
-                    var oldImagePath = Path.Combine(wwwRootPath, oldData.Image.Trim('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        System.IO.File.Delete(oldImagePath);
-                    }
-                }
-
-                // Save new image
-                using (var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
-                model.Image = @"images\uploadedimages\" + fileName;
+                model.ImagePath = imagePath;  // Assign the uploaded image path to the model
             }
-            else
-            {
-                // Retain old image if no new file uploaded
-                model.Image = oldData.Image;
-            }
-
-            // Update database entry
-            await milkEntry.UpdateMilkEntry(model);
+            await milkEntry.UpdateMilkEntry(model, userId.Value);
 
             return RedirectToAction("Index", "Dashboard");
         }

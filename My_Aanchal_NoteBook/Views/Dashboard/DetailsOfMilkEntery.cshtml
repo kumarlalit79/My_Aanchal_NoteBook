@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            @* <div class="col-md-4">
                 @Html.LabelFor(x => x.Image)
                 <br />
                 @Html.Raw("<a href='" + Url.Content("~/path/to/image/" + Model.Image) + "' download class='text-primary form-control'>Download Image</a>")
@@ -65,14 +65,14 @@
             <div class="col-md-8">
                 @Html.LabelFor(x => x.Remark)
                 @Html.TextBoxFor(model => model.Remark, new { @class = "form-control", @readonly = "readonly" })
-            </div>
+            </div> *@
 
         </div>
 
         <div class="row">
             <div class="col-md-6 col-12 mt-4">
                 <div class="form-group d-grid">
-                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary d-block"><i class="bi bi-pencil-square"></i> Edit</a>
+                    <a asp-action="UpdateMilkEntery" asp-route-id="@Model?.Id" class="btn btn-primary d-block"><i class="bi bi-pencil-square"></i> Edit</a>
                 </div>
             </div>
             <div class="col-md-6 col-12 mt-4">

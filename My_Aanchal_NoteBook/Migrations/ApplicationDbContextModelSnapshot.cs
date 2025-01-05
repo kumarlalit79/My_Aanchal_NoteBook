@@ -52,7 +52,7 @@ namespace My_Aanchal_NoteBook.Migrations
                     b.Property<decimal>("Fat")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -62,11 +62,6 @@ namespace My_Aanchal_NoteBook.Migrations
 
                     b.Property<decimal>("Rate")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Remark")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Snf")
                         .HasColumnType("decimal(18,2)");

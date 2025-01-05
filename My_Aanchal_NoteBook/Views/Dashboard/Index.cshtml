@@ -47,12 +47,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Bonus)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Image)
+                 <th>
+                    @Html.DisplayNameFor(model => model.ImagePath)
                 </th>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.Remark)
-                </th>
+                </th>  *@
 
 
                 <th>Action</th>
@@ -92,11 +92,12 @@
                     <td>
                         @* <img src="@Url.Content(item.Image)" alt="Milk Image" width="100" /> *@
                         @* <br /> *@
-                        <a href="@Url.Content(item.Image)" download="@item.Image.Substring(item.Image.LastIndexOf('/') + 1)">Download Image</a>
+                        <a href="@Url.Content(item.ImagePath)" download="@item.ImagePath.Substring(item.ImagePath.LastIndexOf('/') + 1)">
+                            Download Image
+                        </a>
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Remark)
-                    </td>
+
+                    
 
 
                     <td>
