@@ -22,6 +22,15 @@ My Aanchal NoteBook (Smart Dairy) is a digital solution that helps dairy farmers
 - **Secure Authentication:** Create a personalized account, sign in securely, and manage user profile details like Dairy Name and Location.
 - **Bonus Calculation System:** Automatically evaluates qualifying deposits to calculate periodic 9.7% bonuses based on milk quality and quantity.
 
+## 🔄 How It Works
+
+1. **User Onboarding & Authentication:** Farmers and dairy owners register for a personalized account. They securely sign in to access their dashboard and manage profile details containing their Dairy Name and Location.
+2. **Automated Data Entry (OCR):** Instead of manually typing milk deposit details, users simply upload a picture of their daily milk receipt. The back-end logic leverages **Tesseract OCR** to analyze the image and automatically extract vital metrics like Fat, SNF, Quantity, and Rate.
+3. **Manual Entry & Log Management:** Users also retain the flexibility to manually add, edit, or delete their milk entries, ensuring accurate historical records of morning and evening deposits.
+4. **Data Processing & Bonus Calculation:** As data is ingested, the system calculates the daily revenue. A built-in algorithm evaluates qualifying deposits to automatically calculate periodic 9.7% bonuses based on the extracted milk quality.
+5. **Interactive Financial Dashboards:** The processed data populates a comprehensive financial dashboard, where users can monitor their 15-day revenue, monthly earnings, and accrued bonuses securely.
+6. **Analytics & Visualization:** The dashboard utilizes **Highcharts.js** to draw dynamic line and column charts, enabling users to easily visualize their milk deposit volumes and pricing trends over time.
+
 ## 📁 Project Structure
 - `Controllers/` - Manages backend routing, session authentication, and OCR processing logic.
 - `Models/` - Contains core Entity Framework domain models (`User`, `MilkEntry`).
