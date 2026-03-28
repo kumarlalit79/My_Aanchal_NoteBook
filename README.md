@@ -69,7 +69,7 @@ dotnet run
 ### Environment Variables
 | Variable | Description | Example |
 | -------- | ----------- | ------- |
-| `ConnectionStrings:DefaultConnection` | SQL Server database connection string | `Server=LAPTOP-JBAGTGLB\SQLEXPRESS;Database=AnchalBook;Trusted_Connection=True;` |
+| `ConnectionStrings:DefaultConnection` | SQL Server database connection string | `Server=YOUR_SERVER_NAME\SQLEXPRESS;Database=AnchalBook;Trusted_Connection=True;` |
 
 ## 🔌 API Endpoints
 | Method | Route | Description |
