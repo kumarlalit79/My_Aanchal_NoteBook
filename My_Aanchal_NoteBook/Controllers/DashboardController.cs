@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using My_Aanchal_NoteBook.Data;
 using My_Aanchal_NoteBook.Models;
 using My_Aanchal_NoteBook.Repository.Interface;
@@ -26,6 +27,14 @@ namespace My_Aanchal_NoteBook.Controllers
             this.context = context;
         }
 
+        public IActionResult HomePage()
+        {
+            return View();
+        }
+        public IActionResult AboutPage()
+        {
+            return View();
+        }
         public IActionResult DashboardMethod()
         {
             var username = HttpContext.Session.GetString("Username");
@@ -35,6 +44,30 @@ namespace My_Aanchal_NoteBook.Controllers
             {
                 return RedirectToAction("SignIn", "Registeration");
             }
+
+            var last15Days = DateTime.Now.AddDays(-15);
+            var totalEarnings = context.MilkEntries
+                .Where(x => x.EntryDate >= last15Days && x.UserId == userid.Value)
+                .Sum(x => (decimal?)x.TotalPrice) ?? 0;
+
+            ViewBag.TotalEarnings = totalEarnings;
+
+            var lastMonth = DateTime.Now.AddMonths(-1);
+            var monthlyEarnings = context.MilkEntries
+                .Where(x => x.EntryDate >= lastMonth && x.UserId == userid.Value)
+                .Sum(x => (decimal?)x.TotalPrice) ?? 0;
+
+            ViewBag.MonthlyEarnings = monthlyEarnings;
+
+            var bonus15Days =  context.MilkEntries
+            .Where(x => x.EntryDate >= last15Days && x.UserId == userid.Value)
+            .Sum(x => (decimal?)x.Bonus) ?? 0;
+            decimal bonusPercentage = 0;
+            if (totalEarnings > 0)
+                bonusPercentage = (bonus15Days / totalEarnings) * 100;
+            ViewBag.Bonus15Days = bonus15Days;
+            ViewBag.BonusPercentage = bonusPercentage;
+
             return View();
         }
 
@@ -115,6 +148,13 @@ namespace My_Aanchal_NoteBook.Controllers
             });
         }
 
+        [HttpGet]
+        public JsonResult GetMilkReport()
+        {
+            
+            return Json(new {  });
+        }
+
         public async Task<IActionResult> Index(User model)
         {
 
@@ -126,9 +166,8 @@ namespace My_Aanchal_NoteBook.Controllers
             {
                 return RedirectToAction("SignIn", "Registeration");
             }
-
-
             var milkEntryData = await milkEntry.GetAllRecord(model, userid.Value);
+
             return View(milkEntryData);
         }
 

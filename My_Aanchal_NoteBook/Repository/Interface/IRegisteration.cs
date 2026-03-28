@@ -5,7 +5,7 @@ namespace My_Aanchal_NoteBook.Repository.Interface
     public interface IRegisteration
     {
         Task SignUpUser(User model);
-        Task<User> GetUserByPhoneNumber(string phoneNumber);
+        Task<User> GetUserByPhoneNumber(string phoneNumber, string password);
 
         Task<IEnumerable<User>> Users(User model, int id);
         Task<User> GetById(int id);

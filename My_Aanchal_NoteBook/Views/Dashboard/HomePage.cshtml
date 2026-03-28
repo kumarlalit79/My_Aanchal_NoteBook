@@ -1,0 +1,665 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<!-- Google Fonts (Dosis) -->
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+
+<!-- AOS (Scroll Animation) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+<link href="~/css/homepage.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.13.1/font/bootstrap-icons.min.css" />
+
+<style>
+    body, p, .nav-link, .scroller-id {
+        font-family: 'Dosis', sans-serif;
+        font-weight: 500;
+    }
+
+    .hero-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+        background: url('../images/mainimg.webp') no-repeat center center/cover;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-content {
+        position: relative;
+        max-width: 900px;
+        padding: 20px;
+        z-index: 2;
+    }
+
+    .hero-heading {
+        font-size: 3rem;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+        /* .hero-heading .highlight-wrapper {
+            font-weight: bold;
+            display: inline-block;
+            padding: 0 6px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #4167D5;
+        } */
+
+    .hero-subheading {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #eee;
+    }
+
+    .btn-primary {
+        background-color: #4167D5 !important;
+        border-color: #4167D5 !important;
+    }
+
+    .btn-success {
+        background-color: #198754 !important;
+        border-color: #198754 !important;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #333;
+        }
+
+
+    .logo-img {
+        width: 188px; /* Desktop/Laptop पर बड़ा logo */
+        height: auto;
+        padding-bottom: 10px;
+    }
+
+    /* Responsive (Mobile/Tablet) */
+    @@media (max-width: 768px) {
+        .logo-img
+
+    {
+        width: 180px; /* Mobile/tablet पर छोटा */
+    }
+
+    }
+
+
+    @@media (max-width: 768px) {
+        .hero-heading {
+            font-size: 2.2rem;
+        }
+
+        .hero-subheading {
+            font-size: 1rem;
+        }
+
+         
+        
+
+    
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+    .product-info {
+        padding: 15px;
+    }
+
+    .product-title {
+        color: black;
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .product-description {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .product-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+        .hero-buttons a {
+            padding: 10px 25px;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Solid Button (Normal: #FAA919, Hover: White) */
+        .hero-buttons .btn-white {
+            background: #4167D5;
+            color: #fff;
+            border: 2px solid #4167D5;
+            transition: all 0.3s ease;
+        }
+
+            .hero-buttons .btn-white:hover {
+                background: #fff;
+                color: #000;
+                border: 2px solid #fff;
+            }
+
+        /* Outline Button (Normal: Transparent White, Hover: Solid White) */
+        .hero-buttons .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            transition: all 0.3s ease;
+        }
+
+            .hero-buttons .btn-outline:hover {
+                background: #4167D5;
+                color: #fff;
+                border: 2px solid #4167D5;
+            }
+
+
+    .footer-link {
+        color: #000;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+    }
+
+        .footer-link:hover {
+            text-decoration: underline;
+            cursor: pointer;
+            color: #000;
+        }
+
+    .btn-pink {
+        background-color: #e83e8c;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-pink:hover {
+            background-color: #c91c70;
+        }
+
+    .contact-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .feature-list i {
+            color: green;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+    .nav-class-css {
+        height: 83.4px;
+    }
+
+        .nav-class-css:hover {
+            color: #4167D5;
+        }
+
+
+
+        .nav-class-css .container-fluid {
+            display: flex;
+            justify-content: space-between; /* logo left, links center, login right */
+            align-items: center;
+        }
+
+    .navbar-nav {
+        flex: 1;
+        justify-content: center; /* links को center में लाता है */
+    }
+
+    .nav-class-css .nav-link:hover {
+        color: #4167D5 !important;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .navbar {
+        min-height: 50px;
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .nav-link {
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
+    }
+
+    .news-ticker {
+        background-color: #4167D5;
+        color: white;
+        
+        font-size: 14px;
+    }
+
+    footer {
+        background-color: #4167D5;
+        color: #fff;
+    }
+
+    #contact {
+        background-color: #4167D5;
+        color: #fff;
+    }
+        footer a.footer-link {
+            color: #fff !important;
+        }
+
+            footer a.footer-link:hover {
+                color: #dcdcdc !important;
+            }
+
+    .contact-section {
+        background-color: var(--bs-primary); /* Bootstrap का primary color */
+        color: #fff; /* text white */
+    }
+
+        .contact-section a {
+            color: #ffeb3b; /* links को थोड़ा highlight look दो */
+        }
+
+    .navbar-nav .nav-link {
+        font-size: 18px; /* links का size बड़ा */
+        font-weight: 200; /* थोड़ा bold look */
+        color: #000; /* default color */
+        position: relative; /* underline effect के लिए */
+        transition: color 0.3s ease;
+    }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff; /* hover पर color change */
+        }
+
+        /* Underline effect */
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px; /* text से थोड़ा नीचे */
+            width: 0%;
+            height: 2px;
+            background-color: #007bff; /* underline color */
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%; /* hover पर underline दिखेगा */
+        }
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- 🔵 News Ticker -->
+<div class="news-ticker py-2 scroller-id">
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+        📰 Welcome to Smar Dairy Tracker! Fresh Milk, Butter, Ghee & More delivered to your home. 🐄 Healthy Cows, Happy Customers! Order Today!
+    </marquee>
+</div>
+
+
+
+<nav class="navbar navbar-expand-lg nav-class-css">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="~/images/cowlogo.png" class="logo-img" />
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3  text-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Right Side (Login Icon) -->
+            <form class="d-flex" role="search">
+                <a href="@Url.Action("SignIn", "Registeration")" class="text-black"><i class="fa-solid fa-user fa-2x"></i></a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content" data-aos="fade-up">
+        <h1 class="hero-heading">
+            Experience the <span class="highlight-wrapper">Freshness</span> of Fresh Milk
+        </h1>
+        <p class="hero-subheading">
+            Welcome to Milkyaanchal, your online source for premium dairy products.
+            We offer fresh milk, creamy butter, rich ghee, and more. Taste the difference
+            quality makes with our farm-fresh goodness delivered straight to your door.
+        </p>
+        <div class="hero-buttons">
+            <a href="#products-dairy" class="btn-white">Our Products</a>
+            <a href="#about" class="btn-outline">Learn More</a>
+        </div>
+    </div>
+
+
+</section>
+
+<section id="about" class="about-section">
+    <div class="container about-container" data-aos="fade-up">
+        <div class="about-image-wrapper">
+            <img src="~/images/container1.png" data-aos="fade-up" />
+        </div>
+        <div class="about-content-wrapper">
+            <h2 class="about-heading">Our Heritage and Mission</h2>
+            <p class="about-description">Milkyaanchal has been a trusted name in dairy farming for over a decade, blending traditional methods with modern technology to ensure the highest quality products. Our mission is to deliver pure, nutritious dairy items while upholding sustainable and ethical practices.</p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <p class="stat-number" data-target="1500">0</p>
+                    <p class="stat-label">annual milk production</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-number" data-target="200">0</p>
+                    <p class="stat-label">of premium dairy products processed yearly</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-number" data-target="50">0</p>
+                    <p class="stat-label">of dedicated dairy farming experience</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-number" data-target="1000">0</p>
+                    <p class="stat-label">served with care</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="products-dairy" class="products-section">
+    <div class="container" data-aos="fade-up">
+        <div class="products-grid">
+            <a href="#" class="product-card">
+                <img src="~/images/milkglass.webp" />
+                <div class="product-info">
+                    <h3 class="product-title">Fresh Milk: Pure and Nutritious</h3>
+                    <p class="product-description">Sourced directly from our farm, our fresh milk is rich in nutrients and free from additives, perfect for daily consumption.</p>
+                </div>
+            </a>
+            <a href="#" class="product-card">
+                <img src="~/images/herbalghee.webp" />
+                <div class="product-info">
+                    <h3 class="product-title">Rich Ghee: Traditional Aroma</h3>
+                    <p class="product-description">Made from high-quality butter, our rich ghee retains its natural aroma and flavor, ideal for cooking and baking.</p>
+                </div>
+            </a>
+            <a href="#" class="product-card">
+                <img src="~/images/butter.webp" />
+                <div class="product-info">
+                    <h3 class="product-title">Creamy Butter: Farm Fresh</h3>
+                    <p class="product-description">Crafted from our farm's milk, our creamy butter is perfect for spreading, cooking, and baking, ensuring quality and taste.</p>
+                </div>
+            </a>
+            <a href="#" class="product-card">
+                <img src="~/images/cows.webp" />
+                <div class="product-info">
+                    <h3 class="product-title">Animal Feed: Healthy Growth</h3>
+                    <p class="product-description">Our nutritious animal feed promotes healthy growth and productivity of dairy animals, made with quality ingredients sourced locally.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+<section id="feature-milk" class="feature-section">
+    <div class="container mb-3" data-aos="fade-up">
+        <div class="feature-content-bordered " style="border:none; outline:none;">
+            <div class="feature-text">
+                <h2 class="feature-heading">Experience the Purity of Milkyaanchal's Fresh Milk</h2>
+                <p class="feature-description">Savor the unmatched freshness and quality of Milkyaanchal’s fresh milk. Sourced directly from our farm, our milk is rich in essential nutrients and free from additives, ensuring a healthy and delicious addition to your daily routine. Taste the difference today!</p>
+                <ul class="feature-list">
+                    <li><i class="bi bi-check-circle-fill"></i>Farm-Fresh Goodness: Directly from our cows to your glass.</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Nutrient-Rich: Packed with essential vitamins and minerals.</li>
+                    <li><i class="bi bi-check-circle-fill"></i>No Additives: Pure, natural milk with no preservatives.</li>
+                </ul>
+                <div class="hero-buttons">
+                    <a href="#products-dairy" class="btn-white">Login Now</a>
+                </div>
+                
+            </div>
+            <div class="feature-image">
+                <img src="~/images/exppurityofmilk.webp" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="feature-feed" class="feature-section">
+    <div class="container feature-container-reversed mb-3" data-aos="fade-up">
+        <div class="feature-image">
+            <img src="~/images/nourish.webp" />
+        </div>
+        <div class="feature-text">
+            <h2 class="feature-heading">Nourish Your Livestock with Milkyaanchal's Premium Animal Feed</h2>
+            <p class="feature-description">At Milkyaanchal, we understand the importance of quality feed for healthy and productive dairy animals. Our animal feed is formulated with the finest locally sourced ingredients to ensure your livestock receives the optimal nutrition they need to thrive.</p>
+            <ul class="feature-list">
+                <li><i class="bi bi-check-circle-fill"></i>Supports Optimal Health: Rich in essential nutrients and vitamins.</li>
+                <li><i class="bi bi-check-circle-fill"></i>Locally Sourced: Made with high-quality ingredients.</li>
+                <li><i class="bi bi-check-circle-fill"></i>Improves Milk Yield: Enhances milk production and quality.</li>
+                <li><i class="bi bi-check-circle-fill"></i>Balanced Nutrition: Formulated for healthy growth and productivity.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<footer id="contact"  class="contact-section text-white">
+    <div class="container contact-info-container" data-aos="fade-up">
+        <div class="contact-item">
+            <i class="fa-solid fa-envelope fa-2x"></i>
+            <h4 class="contact-title">Email Us</h4>
+            <p class="contact-details">Reach out to us via email for inquiries, orders, or support. Our team is dedicated to providing you with the best dairy products and service. Feel free to contact us anytime at <a href="mailto:info@milkyaanchal.com" class="contact-link">info@milkyaanchal.com</a>.</p>
+        </div>
+        <div class="contact-item">
+            <i class="fa-solid fa-phone fa-2x"></i>
+            <h4 class="contact-title">Call Us</h4>
+            <p class="contact-details">Have questions or need assistance? Call our customer support team at <a href="tel:+911351234567" class="contact-link">+91 135 1234567</a>. We are available to help you with your orders and inquiries.</p>
+        </div>
+        <div class="contact-item">
+            @* <img src="/page/402249c8-b56e-4dc5-b762-4111b807cd9a/images/3_2590.svg" alt="Location icon" class="contact-icon"> *@
+            <i class="fa-solid fa-location-dot fa-2x"></i>
+            <h4 class="contact-title">Visit Us</h4>
+            <p class="contact-details">Come visit our farm at 123 Milk Lane, Rajpur Road, Dehradun, Uttarakhand, India. We welcome visitors and are happy to show you our farm and products.</p>
+        </div>
+    </div>
+    <div class="map-container">
+        @* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3442.434999189334!2d78.0580343151226!3d30.36706998176684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3908d7738e76f1b9%3A0x8c1f66f4089b2e4d!2sRajpur%20Road%2C%20Dehradun%2C%20Uttarakhand!5e0!3m2!1sen!2sin!4v1678886400000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> *@
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3148.0373292273352!2d79.05122577498257!3d29.320636152502313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390a6b088f0ebfd9%3A0xd92645f92eeaf4c3!2sAanchal%20Dairy!5e1!3m2!1sen!2sin!4v1755456994526!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+
+</footer>
+
+<footer>
+    <div class="container">
+        
+        <div class="row mb-4">
+            <div class="col-md-3 col-12 mb-4">
+                <img src="~/images/cowlogowhite.png" class="logo-img" width="300px" height="300px" />
+                
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <h6 class="fw-bold mb-3">Our Products</h6>
+                <ul class="list-unstyled footer-list">
+                    <li><a href="#" class="footer-link">Fresh Milk</a></li>
+                    <li><a href="#" class="footer-link">Ghee</a></li>
+                    <li><a href="#" class="footer-link">Butter</a></li>
+                    <li><a href="#" class="footer-link">Paneer</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled footer-list">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Products</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <h6 class="fw-bold mb-3">Customer Service</h6>
+                <ul class="list-unstyled footer-list">
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Shipping & Returns</a></li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <hr>
+
+        <!-- Bottom Section -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
+            <p class="mb-2 mb-md-0">© 2025 Smart Dairy Tracker. All rights reserved.</p>
+            <div>
+                <a href="#" class="footer-link me-3">Terms and Conditions</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+            </div>
+            
+        </div>
+
+    </div>
+    <div />
+</footer>
+
+<!-- बाकी Sections वही रहेंगे -->
+<!-- बस हर section, product-card, feature-content में data-aos="fade-up" या data-aos="zoom-in" add कर देना -->
+<!-- Bootstrap + AOS Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const counters = document.querySelectorAll(".stat-number");
+        const speed = 100; // speed factor (number जितना बड़ा, उतना slow)
+
+        const startCounting = (counter) => {
+            const target = +counter.getAttribute("data-target");
+            let count = 0;
+
+            const updateCount = () => {
+                const increment = Math.ceil(target / speed);
+                if (count < target) {
+                    count += increment;
+                    if (count > target) count = target;
+                    counter.innerText = count;
+                    setTimeout(updateCount, 30);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        };
+
+        // Trigger only when section is visible
+        const options = { threshold: 0.5 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    counters.forEach(counter => {
+                        startCounting(counter);
+                    });
+                    observer.disconnect(); // once played, stop observing
+                }
+            });
+        }, options);
+
+        observer.observe(document.querySelector("#about"));
+    });
+</script>

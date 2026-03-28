@@ -26,10 +26,11 @@ namespace My_Aanchal_NoteBook.Repository.Implementation
             await context.SaveChangesAsync();
         }
 
-        public async Task<User> GetUserByPhoneNumber(string phoneNumber)
+        public async Task<User> GetUserByPhoneNumber(string phoneNumber, string password)
         {
-            return await context.Users.FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber);
+            return await context.Users.FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber && p.Password == password);
         }
+        
 
         public async Task<IEnumerable<User>> Users(User model, int id)
         {
@@ -62,5 +63,12 @@ namespace My_Aanchal_NoteBook.Repository.Implementation
                 await context.SaveChangesAsync();
             }
         }
+
+        
+
+        //public Task<User> GetUserByPhoneNumber(string phoneNumber, string password)
+        //{
+        //    return await context.Users.FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber && p.Password == password);
+        //}
     }
 }

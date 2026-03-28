@@ -18,9 +18,9 @@ namespace My_Aanchal_NoteBook.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(string phoneNumber)
+        public async Task<IActionResult> SignIn(string phoneNumber, string password)
         {
-            var user = await registeration.GetUserByPhoneNumber(phoneNumber);
+            var user = await registeration.GetUserByPhoneNumber(phoneNumber, password);
             if (user != null)
             {
                 HttpContext.Session.SetString("MobileNumer", user.PhoneNumber);
@@ -34,10 +34,12 @@ namespace My_Aanchal_NoteBook.Controllers
             else
             {
                 HttpContext.Session.SetString("MobileNumer", phoneNumber);
-                return Json(new { success = false , phoneNumber = phoneNumber });
+                return Json(new { success = false, phoneNumber = phoneNumber });
             }
 
         }
+
+        
         public IActionResult SignUp()
         {
             var mobileNumer = HttpContext.Session.GetString("MobileNumer");
@@ -55,12 +57,10 @@ namespace My_Aanchal_NoteBook.Controllers
             HttpContext.Session.SetString("IsLoggedIn", "true");
             return RedirectToAction("DashboardMethod", "Dashboard");
         }
-
-        
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("SignIn", "Registeration");
+            return RedirectToAction("HomePage", "Dashboard");
         }
         
         

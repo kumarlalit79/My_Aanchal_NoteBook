@@ -50,5 +50,8 @@ namespace My_Aanchal_NoteBook.Models
         public DateTime? OtpCreatedOn { get; set; } // Nullable in case OTP is not generated
 
         public DateTime? OtpEndsOn { get; set; }
+
+        [Required]
+        public string Password { get; set; }
     }
 }

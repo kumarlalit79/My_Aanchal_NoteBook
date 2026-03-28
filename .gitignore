@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore user uploads
+My_Aanchal_NoteBook/wwwroot/Uploads/

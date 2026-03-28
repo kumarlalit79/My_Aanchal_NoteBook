@@ -9,8 +9,8 @@
 
 
 
-<p>
-    <a asp-action="Upload" asp-controller="Dashboard" class="fw-bold float-start btn btn-success mb-2"><i class="bi bi-camera-fill"></i> Scan Reciept</a>
+<p class="mt-2">
+    <a asp-action="Upload" asp-controller="Dashboard" class="fw-bold float-start btn btn-success mb-2 "><i class="bi bi-camera-fill"></i> Scan Reciept</a>
     <a asp-action="CreateMilkEntries" class="fw-bold float-end btn btn-primary mb-2"><i class="bi bi-plus-circle-fill"></i> Create New</a>
 </p>
 
@@ -101,9 +101,9 @@
 
 
                     <td>
-                        <a asp-action="UpdateMilkEntery" asp-controller="Dashboard" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="DetailsOfMilkEntery" asp-route-id="@item.Id">Details</a> |
-                        <a href="javascript:void(0)" onclick="DeleteMilkAlert('@Url.Action("DeleteMilkEntery" , new{id=@item.Id})');">Delete</a>
+                        <a asp-action="UpdateMilkEntery" asp-controller="Dashboard" style="color:blue" asp-route-id="@item.Id" ><i class="bi bi-pencil-square"></i></a>
+                        <a asp-action="DetailsOfMilkEntery" style="color:dimgrey" asp-route-id="@item.Id"><i class="bi bi-info-circle-fill"></i></a>
+                        <a href="javascript:void(0)" style="color:red" onclick="DeleteMilkAlert('@Url.Action("DeleteMilkEntery", new { id = @item.Id })');"><i class="bi bi-trash-fill"></i></a>
                     </td>
                 </tr>
             }

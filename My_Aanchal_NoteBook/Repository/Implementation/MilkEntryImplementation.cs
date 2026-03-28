@@ -16,7 +16,7 @@ namespace My_Aanchal_NoteBook.Repository.Implementation
 
         public async Task<IEnumerable<MilkEntry>> GetAllRecord(User model , int id)
         {
-            var milkRecord = await context.MilkEntries.Where(x => x.UserId == id).ToListAsync();
+            var milkRecord = await context.MilkEntries.Where(x => x.UserId == id).OrderByDescending(x => x.EntryDate).ToListAsync();
             return milkRecord;
         }
 
@@ -49,7 +49,5 @@ namespace My_Aanchal_NoteBook.Repository.Implementation
                 await context.SaveChangesAsync();
             }
         }
-
-        
     }
 }
